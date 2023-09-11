@@ -34,7 +34,7 @@ public class Topic {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id")
-    private Curse course;
+    private Course course;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "answer_id")

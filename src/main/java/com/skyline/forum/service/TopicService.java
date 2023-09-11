@@ -3,7 +3,6 @@ package com.skyline.forum.service;
 import com.skyline.forum.model.Topic;
 import com.skyline.forum.repository.ITopicRepository;
 import com.skyline.forum.service.interfaces.ITopicService;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

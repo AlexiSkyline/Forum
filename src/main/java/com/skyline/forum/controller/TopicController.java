@@ -17,10 +17,9 @@ public class TopicController {
     private final ITopicService topicService;
 
     @PostMapping
-    public ResponseEntity createTopic(@RequestBody Topic topic) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void createTopic(@RequestBody Topic topic) {
         topicService.saveTopic(topic);
-
-        return new ResponseEntity<HttpStatus>(HttpStatus.CREATED);
     }
 
     @GetMapping
@@ -32,24 +31,26 @@ public class TopicController {
     public ResponseEntity<Topic> getTopicByID(@PathVariable Long id) {
         Optional<Topic> topicFound = this.topicService.getTopicById(id);
 
-        return topicFound.map(topic -> new ResponseEntity<>(topic, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        return topicFound.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PutMapping("{id}")
-    public ResponseEntity updateTopic(@PathVariable Long id, @RequestBody Topic topic) {
+    public ResponseEntity<Void> updateTopic(@PathVariable Long id, @RequestBody Topic topic) {
         Optional<Topic> topicFound = this.topicService.getTopicById(id);
-        if (topicFound.isEmpty()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (topicFound.isEmpty()) return ResponseEntity.notFound().build();
 
         this.topicService.updateTopic(topic);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity deleteTopicById(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteTopicById(@PathVariable Long id) {
         Optional<Topic> topicFound = this.topicService.getTopicById(id);
-        if (topicFound.isEmpty()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (topicFound.isEmpty()) return ResponseEntity.notFound().build();
 
         this.topicService.deleteTopicById(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+        return ResponseEntity.ok().build();
     }
 }

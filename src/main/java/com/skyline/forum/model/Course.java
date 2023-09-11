@@ -1,18 +1,15 @@
 package com.skyline.forum.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Entity
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter @Setter
 @Table(name = "Courses")
-public class Curse {
+public class Course {
+
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;

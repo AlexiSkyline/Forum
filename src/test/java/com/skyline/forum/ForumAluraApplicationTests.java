@@ -1,8 +1,9 @@
 package com.skyline.forum;
 
-import com.skyline.forum.dto.course.CourseResponseDto;
-import com.skyline.forum.dto.mapper.ICourseMapper;
-import com.skyline.forum.model.Course;
+import com.skyline.forum.dto.mapper.IUserMapper;
+import com.skyline.forum.dto.user.SignupRequestDto;
+import com.skyline.forum.dto.user.UserUpdateDto;
+import com.skyline.forum.model.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,20 +11,25 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class ForumAluraApplicationTests {
 	@Autowired
-	private ICourseMapper courseMapper;
+	private IUserMapper userMapper;
 
 	@Test
 	void contextLoads() {
-		Course curse = new Course();
-		curse.setId(1L);
-		curse.setName("Laratube");
-		curse.setCategory("Programming");
+		UserUpdateDto updateUser = new UserUpdateDto();
+		updateUser.setUsername("JunitoSkyline");
+		updateUser.setEmail("JunitoSkyline@Hotmail.com");
 
-		CourseResponseDto courseResponseDto = this.courseMapper.curseToCurseResponseDto(curse);
-		System.out.println(courseResponseDto.getId());
-		System.out.println(courseResponseDto.getName());
-		System.out.println(courseResponseDto.getCategory());
+		User userPersisted = new User();
+		userPersisted.setId(899L);
+		userPersisted.setUsername("Alexiskyline");
+		userPersisted.setEmail("Alexiskyline@hotmail.com");
+		userPersisted.setPassword("Hola99");
 
+		User userChanges = this.userMapper.userUpdateDtoToUser(userPersisted, updateUser);
+		System.out.println(userChanges.getId());
+		System.out.println(userChanges.getUsername());
+		System.out.println(userChanges.getEmail());
+		System.out.println(userChanges.getPassword());
 	}
 
 }

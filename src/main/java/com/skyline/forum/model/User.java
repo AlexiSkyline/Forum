@@ -1,25 +1,23 @@
 package com.skyline.forum.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Entity
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter @Setter
 @Table(name = "Users")
 public class User {
+
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
-    private String title;
+
+    @Column( unique = true )
+    private String username;
+
+    @Column( unique = true )
     private String email;
     private String password;
 }

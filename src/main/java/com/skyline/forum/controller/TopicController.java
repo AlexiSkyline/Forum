@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("v1/topics")
+@RequestMapping("v1/api/topics")
 public class TopicController {
     private final ITopicService topicService;
 

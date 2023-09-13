@@ -15,7 +15,7 @@ import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("v1/courses")
+@RequestMapping("v1/api/courses")
 public class CourseController {
     private final ICourseService courseService;
 

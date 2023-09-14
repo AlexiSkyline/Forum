@@ -4,6 +4,7 @@ import com.skyline.forum.dto.mapper.IUserMapper;
 import com.skyline.forum.dto.user.SignupRequestDto;
 import com.skyline.forum.dto.user.UserResponseDto;
 import com.skyline.forum.dto.user.UserUpdateDto;
+import com.skyline.forum.model.Role;
 import com.skyline.forum.model.User;
 import com.skyline.forum.repository.IUserRepository;
 import com.skyline.forum.service.interfaces.IUserService;
@@ -11,8 +12,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+
+import static com.skyline.forum.model.TypeRole.ROLE_CLIENT;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +28,7 @@ public class UserService implements IUserService {
     @Transactional
     public void saveUser(SignupRequestDto signupRequestDto) {
         User user = this.userMapper.signupRequestDtoToUser(signupRequestDto);
+        user.setRoles(Collections.singleton(new Role(1L, ROLE_CLIENT)));
         this.userRepository.save(user);
     }
 

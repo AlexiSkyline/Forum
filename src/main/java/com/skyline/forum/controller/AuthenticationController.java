@@ -20,9 +20,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static com.skyline.forum.model.TypeRole.ROLE_CLIENT;
 import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
@@ -47,7 +49,14 @@ public class AuthenticationController {
         signupRequestDto.setPassword(this.passwordEncoder.encode(signupRequestDto.getPassword()));
         this.userService.saveUser(signupRequestDto);
 
-        return new ResponseEntity<>(this.authenticationResponse(signupRequestDto.getUsername(), signupRequestDto.getPassword()), CREATED);
+        String token = this.jwtUtils.generateTokenFromUsername(signupRequestDto.getUsername());
+
+        return new ResponseEntity<>(AuthenticationResponseDto.builder()
+                .username(signupRequestDto.getUsername())
+                .email(signupRequestDto.getEmail())
+                .token(token)
+                .roles(Collections.singleton(ROLE_CLIENT.name()))
+                .build(), CREATED);
     }
 
     private AuthenticationResponseDto authenticationResponse(String username, String password) {
@@ -61,7 +70,6 @@ public class AuthenticationController {
                 .map(GrantedAuthority::getAuthority).collect(Collectors.toSet());
 
         return AuthenticationResponseDto.builder()
-                .id(userDetails.getId())
                 .username(username)
                 .email(userDetails.getEmail())
                 .roles(roles)

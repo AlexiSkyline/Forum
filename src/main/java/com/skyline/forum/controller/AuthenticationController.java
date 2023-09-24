@@ -24,7 +24,7 @@ import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static com.skyline.forum.model.TypeRole.ROLE_CLIENT;
+import static com.skyline.forum.model.enums.TypeRole.ROLE_CLIENT;
 import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController

@@ -13,6 +13,8 @@ import org.mapstruct.NullValueMappingStrategy;
 public interface IUserMapper {
     User signupRequestDtoToUser(SignupRequestDto signupRequestDto);
 
+    User userResponseDtoToUser(UserResponseDto userResponseDto);
+
     UserResponseDto userToUserResponseDto(User user);
 
     @Mapping(target = "username", source = "userUpdateDto.username")

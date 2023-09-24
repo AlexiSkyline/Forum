@@ -1,5 +1,6 @@
 package com.skyline.forum.model;
 
+import com.skyline.forum.model.enums.TypeRole;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

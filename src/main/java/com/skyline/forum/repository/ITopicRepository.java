@@ -3,4 +3,7 @@ package com.skyline.forum.repository;
 import com.skyline.forum.model.Topic;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ITopicRepository extends JpaRepository<Topic, Long> {}
+public interface ITopicRepository extends JpaRepository<Topic, Long> {
+    Boolean existsTopicByTitleIgnoreCase(String title);
+    Boolean existsTopicByMessageIgnoreCase(String message);
+}

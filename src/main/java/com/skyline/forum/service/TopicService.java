@@ -1,5 +1,7 @@
 package com.skyline.forum.service;
 
+import com.skyline.forum.dto.mapper.ITopicMapper;
+import com.skyline.forum.dto.topic.TopicResponseDto;
 import com.skyline.forum.model.Topic;
 import com.skyline.forum.repository.ITopicRepository;
 import com.skyline.forum.service.interfaces.ITopicService;
@@ -15,6 +17,7 @@ import java.util.Optional;
 public class TopicService implements ITopicService {
 
     private final ITopicRepository topicRepository;
+    private final ITopicMapper topicMapper;
 
     @Override
     @Transactional
@@ -24,14 +27,14 @@ public class TopicService implements ITopicService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Topic> getTopics() {
-        return this.topicRepository.findAll();
+    public List<TopicResponseDto> getTopics() {
+        return this.topicRepository.findAll().stream().map(this.topicMapper::topicToTopicResponseDto).toList();
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<Topic> getTopicById(Long id) {
-        return this.topicRepository.findById(id);
+    public Optional<TopicResponseDto> getTopicById(Long id) {
+        return this.topicRepository.findById(id).map(this.topicMapper::topicToTopicResponseDto);
     }
 
     @Override
@@ -43,6 +46,7 @@ public class TopicService implements ITopicService {
         topicFound.get().setTitle(topic.getTitle());
         topicFound.get().setMessage(topic.getMessage());
         topicFound.get().setStatus(topic.getStatus());
+        topicFound.get().setCourse(topic.getCourse());
 
         this.topicRepository.save(topicFound.get());
     }
@@ -51,5 +55,15 @@ public class TopicService implements ITopicService {
     @Transactional
     public void deleteTopicById(Long id) {
         this.topicRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean titleTopicExists(String title) {
+        return this.topicRepository.existsTopicByTitleIgnoreCase(title);
+    }
+
+    @Override
+    public boolean messageTopicExists(String message) {
+        return this.topicRepository.existsTopicByMessageIgnoreCase(message);
     }
 }

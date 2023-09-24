@@ -16,7 +16,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static com.skyline.forum.model.TypeRole.ROLE_CLIENT;
+import static com.skyline.forum.model.enums.TypeRole.ROLE_CLIENT;
 
 @Service
 @RequiredArgsConstructor

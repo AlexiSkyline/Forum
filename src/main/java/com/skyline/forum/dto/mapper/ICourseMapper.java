@@ -2,6 +2,7 @@ package com.skyline.forum.dto.mapper;
 
 import com.skyline.forum.dto.course.CourseResponseDto;
 import com.skyline.forum.dto.course.CourseRequestDto;
+import com.skyline.forum.dto.topic.TopicCourseDto;
 import com.skyline.forum.model.Course;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
@@ -13,4 +14,6 @@ public interface ICourseMapper {
 
     Course curseResponseDtoToCurse(CourseResponseDto courseResponseDto);
     CourseResponseDto curseToCurseResponseDto(Course course);
+
+    Course topicCourseDtoToCourse(TopicCourseDto topicCourseDto);
 }

@@ -1,5 +1,6 @@
 package com.skyline.forum.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.skyline.forum.model.enums.StatusTopic;
 import jakarta.persistence.*;
 import lombok.*;
@@ -30,10 +31,12 @@ public class Topic {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private User author;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Course course;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)

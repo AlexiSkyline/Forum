@@ -1,4 +1,4 @@
-package com.skyline.forum.model;
+package com.skyline.forum.model.enums;
 
 public enum TypeRole {
     ROLE_CLIENT,

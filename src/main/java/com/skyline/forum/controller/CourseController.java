@@ -3,9 +3,11 @@ package com.skyline.forum.controller;
 import com.skyline.forum.dto.course.CourseRequestDto;
 import com.skyline.forum.dto.course.CourseResponseDto;
 import com.skyline.forum.service.interfaces.ICourseService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +21,8 @@ public class CourseController {
     private final ICourseService courseService;
 
     @PostMapping
+    @PreAuthorize("isAuthenticated()")
+    @SecurityRequirement(name = "JWT Bearer Token")
     public ResponseEntity<Void> createCourse(@Valid @RequestBody CourseRequestDto courseRequestDto) {
         boolean nameAvailable = this.courseService.courseNameExists(courseRequestDto.getName());
         if (nameAvailable) return ResponseEntity.badRequest().build();
@@ -43,6 +47,8 @@ public class CourseController {
     }
 
     @PutMapping("{id}")
+    @PreAuthorize("isAuthenticated()")
+    @SecurityRequirement(name = "JWT Bearer Token")
     public ResponseEntity<Void> updateCourse(@PathVariable Long id, @Valid @RequestBody CourseRequestDto courseRequestDto) {
         CourseResponseDto courseResponseDto = this.courseService.getCourseById(id);
         if (courseResponseDto == null) ResponseEntity.notFound().build();
@@ -56,6 +62,8 @@ public class CourseController {
 
 
     @DeleteMapping("{id}")
+    @PreAuthorize("isAuthenticated()")
+    @SecurityRequirement(name = "JWT Bearer Token")
     public ResponseEntity<Void> deleteCourse(@PathVariable Long id) {
         CourseResponseDto courseResponseDto = this.courseService.getCourseById(id);
         if (courseResponseDto == null) return ResponseEntity.notFound().build();

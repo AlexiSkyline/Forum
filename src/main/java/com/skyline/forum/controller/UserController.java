@@ -3,6 +3,7 @@ package com.skyline.forum.controller;
 import com.skyline.forum.dto.user.UserResponseDto;
 import com.skyline.forum.dto.user.UserUpdateDto;
 import com.skyline.forum.service.interfaces.IUserService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +34,7 @@ public class UserController {
     }
 
     @PutMapping("{username}")
+    @SecurityRequirement(name = "JWT Bearer Token")
     public ResponseEntity<UserResponseDto> updateUserInfo(@PathVariable String username, @Valid @RequestBody UserUpdateDto userUpdateDto) {
         UserResponseDto userResponseDto = this.userService.getUserByUsername(username);
         boolean isEnabledUsername =  this.userService.userNameExists(userUpdateDto.getUsername());

@@ -47,7 +47,24 @@ public class WebSecurityConfig {
                 .exceptionHandling(exceptionHandlingConfigurer -> exceptionHandlingConfigurer.authenticationEntryPoint(this.authEntryPointJwt))
                 .sessionManagement(sessionManagementConfigurer -> sessionManagementConfigurer.sessionCreationPolicy(STATELESS))
                 .authorizeHttpRequests(managerRequestMatcherRegistry -> {
-                    managerRequestMatcherRegistry.requestMatchers("/v1/api/authentication/**", "/v1/api/courses/**", "/v1/api/topics/**", "/v1/api/users/**", "/v1/api/answers/**", "/error/**").permitAll();
+                    managerRequestMatcherRegistry.requestMatchers(
+                            "/v2/api-docs",
+                            "/v3/api-docs",
+                            "/v3/api-docs/**",
+                            "/swagger-resources",
+                            "/swagger-resources/**",
+                            "/configuration/ui",
+                            "/configuration/security",
+                            "/swagger-ui/**",
+                            "/webjars/**",
+                            "/swagger-ui.html",
+
+                            "/v1/api/authentication/**",
+                            "/v1/api/courses/**",
+                            "/v1/api/topics/**",
+                            "/v1/api/users/**",
+                            "/v1/api/answers/**",
+                            "/error/**").permitAll();
                     managerRequestMatcherRegistry.anyRequest().authenticated();
                 })
                 .authenticationProvider(this.authenticationProvider())

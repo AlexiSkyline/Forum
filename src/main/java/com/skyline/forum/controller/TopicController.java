@@ -11,6 +11,7 @@ import com.skyline.forum.security.jwt.JwtUtils;
 import com.skyline.forum.service.interfaces.ICourseService;
 import com.skyline.forum.service.interfaces.ITopicService;
 import com.skyline.forum.service.interfaces.IUserService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -38,6 +39,7 @@ public class TopicController {
     @PostMapping
     @PreAuthorize("isAuthenticated()")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @SecurityRequirement(name = "JWT Bearer Token")
     public ResponseEntity<Void> createTopic(@RequestBody @Valid TopicRequestDto topicRequestDto) {
         UserResponseDto user = this.userService.getUserByUsername(JwtUtils.getUserNameOfToken());
         if (user == null) return new ResponseEntity<>(UNAUTHORIZED);
@@ -72,6 +74,7 @@ public class TopicController {
 
     @PutMapping("{id}")
     @PreAuthorize("isAuthenticated()")
+    @SecurityRequirement(name = "JWT Bearer Token")
     public ResponseEntity<Void> updateTopic(@PathVariable Long id, @RequestBody TopicRequestDto topicRequestDto) {
         UserResponseDto user = this.userService.getUserByUsername(JwtUtils.getUserNameOfToken());
         if (user == null) return new ResponseEntity<>(UNAUTHORIZED);
@@ -97,6 +100,7 @@ public class TopicController {
 
     @DeleteMapping("{id}")
     @PreAuthorize("isAuthenticated()")
+    @SecurityRequirement(name = "JWT Bearer Token")
     public ResponseEntity<Void> deleteTopicById(@PathVariable Long id) {
         UserResponseDto user = this.userService.getUserByUsername(JwtUtils.getUserNameOfToken());
         if (user == null) return new ResponseEntity<>(UNAUTHORIZED);
@@ -112,6 +116,7 @@ public class TopicController {
     @PostMapping("{topicId}/send-answer")
     @PreAuthorize("isAuthenticated()")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @SecurityRequirement(name = "JWT Bearer Token")
     public ResponseEntity<Void> sendAnswer(@PathVariable Long topicId, @RequestBody @Valid AnswerRequestDto answerRequestDto) {
         UserResponseDto user = this.userService.getUserByUsername(JwtUtils.getUserNameOfToken());
         if (user == null) return new ResponseEntity<>(UNAUTHORIZED);

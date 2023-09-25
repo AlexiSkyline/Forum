@@ -1,4 +1,4 @@
-package com.skyline.forum;
+package com.skyline.forum.controller;
 
 
 import com.skyline.forum.dto.answer.AnswerRequestDto;
@@ -9,6 +9,7 @@ import com.skyline.forum.security.jwt.JwtUtils;
 import com.skyline.forum.service.interfaces.IAnswerService;
 import com.skyline.forum.service.interfaces.ITopicService;
 import com.skyline.forum.service.interfaces.IUserService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +21,9 @@ import java.util.Optional;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 @RestController
-@RequestMapping("v1/api/answers")
 @RequiredArgsConstructor
+@RequestMapping("v1/api/answers")
+@SecurityRequirement(name = "JWT Bearer Token")
 public class AnswerController {
     private final IAnswerService answerService;
     private final IUserService userService;

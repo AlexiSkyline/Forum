@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Getter @Setter
 public class TopicResponseDto {
@@ -17,4 +18,5 @@ public class TopicResponseDto {
     private StatusTopic status;
     private UserResponseDto author;
     private CourseResponseDto course;
+    private Set<TopicAnswerDto> answers;
 }

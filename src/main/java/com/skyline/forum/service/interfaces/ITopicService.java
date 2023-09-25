@@ -1,6 +1,7 @@
 package com.skyline.forum.service.interfaces;
 
 import com.skyline.forum.dto.topic.TopicResponseDto;
+import com.skyline.forum.model.Answer;
 import com.skyline.forum.model.Topic;
 
 import java.util.List;
@@ -15,4 +16,6 @@ public interface ITopicService {
 
     boolean titleTopicExists(String title);
     boolean messageTopicExists(String message);
+
+    void setAnswer(Long idTopic, Answer answer);
 }

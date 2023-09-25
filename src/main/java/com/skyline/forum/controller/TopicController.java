@@ -1,9 +1,11 @@
 package com.skyline.forum.controller;
 
+import com.skyline.forum.dto.answer.AnswerRequestDto;
 import com.skyline.forum.dto.mapper.ICourseMapper;
 import com.skyline.forum.dto.mapper.IUserMapper;
 import com.skyline.forum.dto.topic.*;
 import com.skyline.forum.dto.user.UserResponseDto;
+import com.skyline.forum.model.Answer;
 import com.skyline.forum.model.Topic;
 import com.skyline.forum.security.jwt.JwtUtils;
 import com.skyline.forum.service.interfaces.ICourseService;
@@ -105,5 +107,25 @@ public class TopicController {
         this.topicService.deleteTopicById(id);
 
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("{topicId}/send-answer")
+    @PreAuthorize("isAuthenticated()")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ResponseEntity<Void> sendAnswer(@PathVariable Long topicId, @RequestBody @Valid AnswerRequestDto answerRequestDto) {
+        UserResponseDto user = this.userService.getUserByUsername(JwtUtils.getUserNameOfToken());
+        if (user == null) return new ResponseEntity<>(UNAUTHORIZED);
+
+        Optional<TopicResponseDto> topicFound = this.topicService.getTopicById(topicId);
+        if (topicFound.isEmpty()) return ResponseEntity.notFound().build();
+
+        this.topicService.setAnswer(topicId, Answer.builder()
+                .message(answerRequestDto.getMessage())
+                .solution(false)
+                .dateCreated(LocalDateTime.now())
+                .author(this.userMapper.userResponseDtoToUser(user))
+                .build());
+
+        return new ResponseEntity<>(OK);
     }
 }

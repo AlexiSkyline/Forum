@@ -2,6 +2,7 @@ package com.skyline.forum.service;
 
 import com.skyline.forum.dto.mapper.ITopicMapper;
 import com.skyline.forum.dto.topic.TopicResponseDto;
+import com.skyline.forum.model.Answer;
 import com.skyline.forum.model.Topic;
 import com.skyline.forum.repository.ITopicRepository;
 import com.skyline.forum.service.interfaces.ITopicService;
@@ -65,5 +66,16 @@ public class TopicService implements ITopicService {
     @Override
     public boolean messageTopicExists(String message) {
         return this.topicRepository.existsTopicByMessageIgnoreCase(message);
+    }
+
+    @Override
+    @Transactional
+    public void setAnswer(Long idTopic, Answer answer) {
+        Optional<Topic> topicFound = this.topicRepository.findById(idTopic);
+        if (topicFound.isEmpty()) return;
+
+        answer.setTopic(topicFound.get());
+        topicFound.get().getAnswers().add(answer);
+        this.topicRepository.save(topicFound.get());
     }
 }

@@ -14,6 +14,7 @@ import static jakarta.persistence.FetchType.LAZY;
 @AllArgsConstructor
 @Table(name = "Answers")
 public class Answer {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

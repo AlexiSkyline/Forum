@@ -1,7 +1,7 @@
 package com.skyline.forum.controller;
 
-import com.skyline.forum.dto.course.CourseResponseDto;
 import com.skyline.forum.dto.course.CourseRequestDto;
+import com.skyline.forum.dto.course.CourseResponseDto;
 import com.skyline.forum.service.interfaces.ICourseService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
